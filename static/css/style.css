@@ -184,7 +184,7 @@ a {
     }
 
     .side-credits {
-        visibility: collapse;
+        visibility: hidden;
     }
 
     .main-container {
@@ -195,6 +195,10 @@ a {
 @media screen and (max-width: 720px) {
     .side {
         padding-top: 40px;
+    }
+
+    .side-container {
+        padding-left: 0px;
     }
 
     .side-about h1 {
@@ -212,18 +216,26 @@ a {
     }
 
     .main-container {
-        padding: 600px 40px 40px 40px;
+        padding: 600px 20px 40px 20px;
     } 
 }
 
 @media screen and (max-width: 520px) {
+    .side-container {
+        padding-left: 0px;
+    }
+
     .main-container {
-        padding: 650px 40px 40px 40px;
+        padding: 650px 20px 40px 20px;
     } 
 }
 
 @media screen and (max-width: 424px) {
+    .side-container {
+        padding-left: 0px;
+    }
+
     .main-container {
-        padding: 750px 40px 40px 40px;
+        padding: 750px 20px 40px 20px;
     } 
 }
