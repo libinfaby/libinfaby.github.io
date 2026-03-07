@@ -1,124 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libin Faby</title>
-    <link rel="stylesheet" href="./static/css/style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Libin Faby</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:   #111110;
+      --soft:  #6b6b68;
+      --line:  #e4e2de;
+      --bg:    #faf9f7;
+      --red:   #d94f2b;
+      --mono:  'DM Mono', monospace;    
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14.5px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 700px; margin: 0 auto; padding: 80px 32px 120px; }
+
+    header {
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 60px;
+      animation: up 0.6s ease both;
+    }
+    .name {
+      font-family: var(--mono);
+      font-size: clamp(36px, 7vw, 58px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;     
+      background: var(--ink);
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+    .name-dot {
+      width: 11px; height: 11px;
+      background: var(--red);
+      border-radius: 50%;
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+    .tagline { margin-top: 16px; font-size: 13px; color: var(--soft); letter-spacing: 0.04em; }
+    .header-meta { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+    .header-meta a {
+      font-size: 13px; color: var(--soft);
+      transition: color 0.15s;
+      border-bottom: 1px solid transparent; padding-bottom: 1px;
+    }
+    .header-meta a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+    nav { display: flex; gap: 2px; margin-top: 28px; flex-wrap: wrap; }
+    nav a {
+      font-size: 12px; letter-spacing: 0.06em;
+      color: var(--soft); padding: 5px 13px;
+      border: 1px solid var(--line); border-radius: 2px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    nav a:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+    section { margin-bottom: 68px; animation: up 0.5s ease both; }
+    section:nth-child(2) { animation-delay: 0.05s; }
+    section:nth-child(3) { animation-delay: 0.10s; }
+    section:nth-child(4) { animation-delay: 0.15s; }
+    section:nth-child(5) { animation-delay: 0.20s; }
+
+    .section-label {
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 22px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    .about-text p { font-size: 15.5px; color: var(--ink); line-height: 1.9; font-style: bold; }
+    .about-text p + p { margin-top: 16px; }
+
+    .skill-row {
+      display: flex; align-items: baseline;
+      padding: 12px 0; border-bottom: 1px solid var(--line); gap: 16px;
+    }
+    .skill-row:first-child { border-top: 1px solid var(--line); }
+    .skill-key { font-size: 12px; color: var(--soft); letter-spacing: 0.04em; width: 114px; flex-shrink: 0; }
+    .skill-vals { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      font-size: 12.5px; color: var(--ink);
+      padding: 2px 11px; border: 1px solid var(--line);
+      border-radius: 2px; background: #fff; transition: border-color 0.15s;
+    }
+    .pill:hover { border-color: var(--ink); }
+
+    .project {
+      padding: 24px 0; border-bottom: 1px solid var(--line);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 8px 20px; align-items: start;
+    }
+    .project:first-child { border-top: 1px solid var(--line); }
+    .project-name { font-size: 20px; font-weight: 500; color: var(--ink); line-height: 1.2; transition: color 0.15s; }
+    .project-name:hover { color: var(--red); }
+    .project-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }    
+    .project-lang-badge {
+      font-size: 11px; letter-spacing: 0.06em;
+      color: var(--soft); padding: 3px 9px;
+      border: 1px solid var(--line); border-radius: 2px;
+      white-space: nowrap; margin-top: 4px;
+    }
+    .project-desc { grid-column: 1; font-size: 13.5px; color: var(--soft); line-height: 1.8; margin-top: 6px; }
+    .project-link {
+      grid-column: 1; font-size: 12px; color: var(--soft);
+      margin-top: 10px; display: inline-flex; align-items: center; gap: 5px;
+      border-bottom: 1px solid var(--line); padding-bottom: 1px;
+      width: fit-content; transition: color 0.15s, border-color 0.15s;
+    }
+    .project-link:hover { color: var(--ink); border-color: var(--ink); }
+
+    .contact-row {
+      display: flex; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--line); gap: 24px;
+    }
+    .contact-row:first-child { border-top: 1px solid var(--line); }
+    .contact-type { font-size: 11px; letter-spacing: 0.08em; color: var(--soft); width: 80px; flex-shrink: 0; }
+    .contact-val { font-size: 14px; color: var(--ink); transition: color 0.15s; }
+    .contact-val:hover { color: var(--red); }
+
+    footer {
+      margin-top: 80px; padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--soft); flex-wrap: wrap; gap: 8px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 500px) {
+      .wrap { padding: 48px 20px 80px; }
+      .skill-key { width: 86px; }
+      .project { grid-template-columns: 1fr; }
+      .project-lang-badge { width: fit-content; }
+    }
+  </style>
 </head>
 <body>
-    <div class="side">
-        <div class="side-container">
-            <div class="side-about">
-                <a href="#top"><h1>Libin Faby</h1></a>
-                <p>Software Developer and Business Graduate</p>
-            </div>
-            <div class="side-links">
-                <a href="#top">About</a>
-                <a href="#main-projects-heading">Projects</a>
-            </div>
-            <div class="side-contacts">
-                <a href="https://github.com/libinfaby" target="blank">
-                    <img src="./static/images/side-icon-github.svg" alt="github" width="40px">
-                </a>
-                <a href="#" target="blank">
-                    <img src="./static/images/side-icon-linkedin.svg" alt="linkedin" width="40px">
-                </a>
-                <a href="#" target="blank">
-                    <img src="./static/images/side-icon-twitter.svg" alt="twitter" width="45px">
-                </a>
-                <a href="#main-contacts-heading">
-                    <img src="./static/images/side-icon-mail.svg" alt="mail" width="45px">
-                </a>
-                <a href="#main-contacts-heading">
-                    <img src="./static/images/side-icon-phone.svg" alt="phone" width="48px">
-                </a>
-            </div>
-            <div class="side-credits">
-                <p>&copy; 2022.Libin Faby <a href="#">Credits.</a></p>
-            </div>
-        </div>
+<div class="wrap">
+
+  <header>
+    <h1 class="name"><span class="name-dot"></span>Libin Faby<span class="cursor"></span></h1>
+    <p class="tagline">Software Developer &nbsp;·&nbsp; Business Graduate &nbsp;·&nbsp; Kerala, India</p>
+    <div class="header-meta">
+      <a href="https://github.com/libinfaby" target="_blank">↗ GitHub</a>
+      <a href="https://www.linkedin.com/in/libinfaby/" target="_blank">↗ LinkedIn</a>
+      <a href="mailto:libinfc0@gmail.com">↗ Email</a>
     </div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    <div class="main">
-        <div class="main-container" id="top">
-
-        <!-- ABOUT SECTION -->
-
-            <div id="main-about-heading">
-                <h1>About me</h1>
-            </div>
-
-            <div class="main-contents">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget sapien ut quam luctus sagittis. 
-                    Curabitur commodo dui nibh, non condimentum dui fringilla at. Vestibulum ultricies feugiat quam sed varius. 
-                    Nulla et mattis ex. Phasellus in dolor quam. Phasellus urna nibh, porttitor eu quam sed, aliquet euismod massa. 
-                    Morbi semper scelerisque congue. Suspendisse interdum semper nulla in placerat. Vestibulum consectetur pellentesque odio at gravida. 
-                    Aenean scelerisque efficitur posuere. Etiam porttitor nisi nec libero hendrerit condimentum. Nulla at leo elit. 
-                    Fusce vitae feugiat quam. Duis feugiat orci a faucibus ornare.
-                </p>
-                <p></p>
-                <p>
-                    Phasellus in viverra urna. Proin mattis sem at lectus tempus malesuada. Aliquam in aliquam mauris, vel placerat neque. 
-                    Fusce quis nibh tortor. Vestibulum ante nisl, viverra eget mauris quis, fringilla hendrerit magna. Cras ut augue enim. 
-                    Fusce pulvinar elit metus, ut auctor metus feugiat a. Donec mollis eleifend quam vel sodales. Curabitur et erat id metus varius dictum.
-                </p>
-                <p></p>
-                <p>
-                    Morbi dolor sem, malesuada in pulvinar et, commodo vel ipsum. Fusce convallis, erat tincidunt pretium sodales, nisl tellus cursus magna, sit amet semper lorem elit eu arcu. 
-                    Pellentesque sit amet magna lectus. Donec cursus quam interdum lorem porta ultricies. Sed euismod fringilla efficitur. 
-                    Praesent pulvinar metus nec scelerisque cursus. Quisque ut scelerisque dui. Aliquam dapibus at justo eu bibendum. Nullam a feugiat mauris. 
-                    Etiam pretium est a mollis suscipit. Pellentesque vel massa in sapien egestas tristique vel ac lectus. In elementum risus nunc, eu convallis tellus pretium ac. 
-                    Phasellus at accumsan felis. Fusce fringilla eros quis ante ullamcorper, et interdum mi mattis. Donec porttitor commodo tempor.
-                </p>
-            </div>
-
-        <!-- PROJECTS SECTION -->
-
-            <div id="main-projects-heading">
-                <h1>Projects</h1>
-            </div>
-
-            <div class="main-projects-list">
-                <h1><a href="#">Project1</a></h1>
-            </div>
-            <div class="main-contents">
-                <p>
-                    Project 1 description.
-                </p>
-            </div>    
-
-            <div class="main-projects-list">
-                <h1><a href="#">Project2</a></h1>
-            </div>
-            <div class="main-contents">
-                <p>
-                    Project 2 description.
-                </p>
-            </div>
-
-            <div class="main-projects-list">
-                <h1><a href="#">Project3</a></h1>
-            </div>
-            <div class="main-contents">
-                <p>
-                    Project 3 description.
-                </p>
-            </div>  
-
-        <!-- CONTACTS SECTION -->
-
-            <div id="main-contacts-heading">
-                <h1>Contacts</h1>
-            </div>
-
-            <p class="main-contents"><b>E-mail :</b> libinfc0@gmail.com</p>
-            <p class="main-contents"><b>Phone  :</b> 9048168058</p>
-
-        </div>
+  <section id="about">
+    <div class="section-label">About</div>
+    <div class="about-text">
+      <p>Backend-focused software developer building reliable, database-driven systems across healthcare and finance — from electronic medical records and lab workflows to accounting and reporting tools.</p>
+      <p>I enjoy problems where correctness matters: clinical data pipelines, ASTM/HL7 protocols, Windows services, and automation. Open source advocate, musician, and endlessly curious about how things work.</p>
     </div>
+  </section>
 
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <div>
+      <div class="skill-row">
+        <span class="skill-key">Languages</span>
+        <div class="skill-vals">
+          <span class="pill">C#</span><span class="pill">Python</span><span class="pill">VB</span><span class="pill">SQL</span><span class="pill">HTML</span><span class="pill">Java</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-key">Frameworks</span>
+        <div class="skill-vals">
+          <span class="pill">.NET</span><span class="pill">Django</span><span class="pill">Spring</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-key">Databases</span>
+        <div class="skill-vals">
+          <span class="pill">SQL Server</span><span class="pill">PostgreSQL</span><span class="pill">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-key">Protocols</span>
+        <div class="skill-vals">
+          <span class="pill">ASTM</span><span class="pill">HL7</span><span class="pill">REST</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-key">Domains</span>
+        <div class="skill-vals">
+          <span class="pill">Healthcare</span><span class="pill">LIS / RIS</span><span class="pill">EMR</span><span class="pill">Accounting & Finance</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="project">
+      <a class="project-name" href="https://github.com/libinfaby/HIS_RIS_Integration" target="_blank">HIS–RIS Integration Middleware</a>
+      <div class="project-badges">
+        <span class="project-lang-badge">C#</span>
+        <span class="project-lang-badge">SQL Server</span>
+      </div>
+      <p class="project-desc">Middleware for bidirectional data exchange between Hospital Information Syatems and Radiology Information Systems. Built for reliability in live clinical environments.</p>
+      <a class="project-link" href="https://github.com/libinfaby/HIS_RIS_Integration" target="_blank">View on GitHub ↗</a>
+    </div>
+    <div class="project">
+      <a class="project-name" href="https://github.com/libinfaby/LACS" target="_blank">LACS - Lab Analyzer Communication Simulator</a>
+      <div class="project-badges">
+        <span class="project-lang-badge">Python</span>
+      </div>
+      <p class="project-desc">ASTM/HL7 communication simulator for laboratory analyzers with LIS integration. Designed for protocol testing and validation in clinical lab settings.</p>
+      <a class="project-link" href="https://github.com/libinfaby/LACS" target="_blank">View on GitHub ↗</a>
+    </div>
+    <div class="project">
+      <a class="project-name" href="https://github.com/libinfaby/iss-info" target="_blank">ISS Info</a>
+      <div class="project-badges">
+        <span class="project-lang-badge">HTML</span>
+        <span class="project-lang-badge">JS</span>
+        <span class="project-lang-badge">CSS</span>
+      </div>
+      <p class="project-desc">Live tracker for the International Space Station displaying real-time orbital position, speed, and trajectory data.</p>
+      <a class="project-link" href="https://github.com/libinfaby/iss-info" target="_blank">View on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div>
+      <div class="contact-row">
+        <span class="contact-type">Email</span>
+        <a class="contact-val" href="mailto:libinfc0@gmail.com">libinfc0@gmail.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="contact-type">Phone</span>
+        <a class="contact-val" href="tel:9048168058">+91 9048168058</a>
+      </div>
+      <div class="contact-row">
+        <span class="contact-type">GitHub</span>
+        <a class="contact-val" href="https://github.com/libinfaby" target="_blank">github.com/libinfaby</a>
+      </div>
+      <div class="contact-row">
+        <span class="contact-type">LinkedIn</span>
+        <a class="contact-val" href="https://www.linkedin.com/in/libinfaby/" target="_blank">linkedin.com/libinfaby</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Libin Faby</span>
+    <span>Free and Open Source Software for a better world 🌎️</span>
+  </footer>
+
+</div>
 </body>
 </html>
